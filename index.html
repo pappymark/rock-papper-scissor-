@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #cfcccca7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #banner {
+            
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        #gameForm {
+            background-color: #b0dc1d;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 10px #3333337d;
+            width: 300px;
+            text-align: center;
+        }
+
+        #output {
+            padding-left: 50px;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        .score {
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        select, button {
+            margin-bottom: 10px;
+            font-size: 16px;
+            padding: 5px 10px;
+        }
+
+        #resetScore {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #resetScore:hover {
+            background-color: #261f20;
+        }
+
+        #playerScoreContainer {
+            background-color: red;
+        }
+
+        #computerScoreContainer {
+            background-color: blue;
+        }
+    
+
+    </style>
+</head>
+<body>
+    
+    <div id="gameForm">
+        <div id="banner">
+            <div id="playerScoreContainer" >PLAYER SCORE: <span id="playerScore">0</span> </div> <div id="computerScoreContainer" >COMPUTER SCORE: <span id="computerScore">0</span></div> 
+        </div>
+        <div id="output"></div>
+        <br>
+        <select id="playerChoice">
+            <option value="rock">Rock</option>
+            <option value="paper">Paper</option>
+            <option value="scissors">Scissors</option>
+        </select>
+        <br>
+        <button id="submitChoice">Submit</button>
+        <br>
+        <button id="resetScore">Reset Scores</button>
+    </div>
+    <script>
+        let outputDiv = document.getElementById("output");
+        let submitButton = document.getElementById("submitChoice");
+        let playerScoreDisplay = document.getElementById("playerScore");
+        let computerScoreDisplay = document.getElementById("computerScore");
+        let resetButton = document.getElementById("resetScore");
+        let playerScore = 0;
+        let computerScore = 0;
+
+        submitButton.addEventListener("click", function() {
+            let playerChoice = document.getElementById("playerChoice").value.toLowerCase();
+            let computerChoice = ["rock", "paper", "scissors"][Math.floor(Math.random() * 3)];
+            let result;
+
+            if (playerChoice === "rock" && computerChoice === "scissors" ||
+                playerChoice === "paper" && computerChoice === "rock" ||
+                playerChoice === "scissors" && computerChoice === "paper") {
+                playerScore++;
+                result = "Player wins!";
+            } else if (playerChoice === computerChoice) {
+                result = "It's a tie!";
+            } else {
+                computerScore++;
+                result = "Computer wins!";
+            }
+
+            outputDiv.innerHTML = `Player choice:  ${playerChoice}<br>Computer choice: ${computerChoice}<br>Result: ${result}`;
+            updateScores();
+        });
+
+        function updateScores() {
+            playerScoreDisplay.textContent = playerScore;
+            computerScoreDisplay.textContent = computerScore;
+        }
+
+        resetButton.addEventListener("click", function() {
+            playerScore = 0;
+            computerScore = 0;
+            updateScores();
+            outputDiv.innerHTML = '';
+        });
+    </script>
+</body>
+</html>
